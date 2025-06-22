@@ -43,9 +43,9 @@ namespace StoreProject
         }
 
         // Method ดึงข้อมูลทั้งหมดจาก Product_tb มาแสดงที่ listView
-        private void getAllProductTolv()
+        private void getAllProductToLv()
         {
-            String connectionString = @"Server=SAT\SQLEXPRESS;Database=store_db;Trusted_Connection=True";
+            string connectionString = @"Server=SATJATUM\SQLEXPRESS01;Database=store_db;Trusted_Connection=True";
 
             using (SqlConnection sqlConnection = new SqlConnection(connectionString))
             {
@@ -55,12 +55,12 @@ namespace StoreProject
 
                     //การทำงานกับตารางในฐานข้อมูล (SELECT, INSERT, UPDATE, DELETE)
                     //สร้างคำสั่ง Sql ดึงข้อมูลทั้งหมดในตาราง product_tb
-                    String strSQL = "SELECT proId, proName,proPrice,ProQuan, ProUnit , ProStatus, proImage From product_tb";
+                    string strSQL = "SELECT proId, proName,proPrice,proQuan, proUnit , proStatus, proImage From product_tb";
 
-                    using (SqlDataAdapter dataAdapter = new SqlDataAdapter(strSQL, sqlConnection)) 
-                    { 
+                    using (SqlDataAdapter dataAdapter = new SqlDataAdapter(strSQL, sqlConnection))
+                    {
                         //เอาข้อมูลที่ได้จาก strSQL เป็นก้อนใน dataAdapter มาทำให้เป็นตารางโดยใส่ไว้ใน DataTable
-                        DataTable dataTable = new DataTable ();
+                        DataTable dataTable = new DataTable();
                         dataAdapter.Fill(dataTable);
 
                         //ตั้งค่า ListView
@@ -70,31 +70,31 @@ namespace StoreProject
                         lvAllProduct.View = View.Details;
 
                         //ตั้งค่าการแสดงรูปใน View
-                        if(lvAllProduct.SmallImageList == null)
+                        if (lvAllProduct.SmallImageList == null)
                         {
                             lvAllProduct.SmallImageList = new ImageList();
-                            lvAllProduct.SmallImageList.ImageSize = new Size (50,50);
+                            lvAllProduct.SmallImageList.ImageSize = new Size(50, 50);
                             lvAllProduct.SmallImageList.ColorDepth = ColorDepth.Depth32Bit;
                         }
                         lvAllProduct.SmallImageList.Images.Clear();
 
                         //กำหนดรายละเอียด Colum ใน ListView
                         lvAllProduct.Columns.Add("รูปภาพ", 80, HorizontalAlignment.Left);
-                        lvAllProduct.Columns.Add("รหัสสินค้า", 80, HorizontalAlignment.Left);
+                        lvAllProduct.Columns.Add("รหัสสินค้า", 100, HorizontalAlignment.Left);
                         lvAllProduct.Columns.Add("ชื่อสินค้า", 150, HorizontalAlignment.Left);
-                        lvAllProduct.Columns.Add("ราคา", 80, HorizontalAlignment.Left);
-                        lvAllProduct.Columns.Add("จำนวน", 80, HorizontalAlignment.Left);
-                        lvAllProduct.Columns.Add("หน่วย", 80, HorizontalAlignment.Left);
-                        lvAllProduct.Columns.Add("สถานะ", 80, HorizontalAlignment.Left);
+                        lvAllProduct.Columns.Add("ราคา", 100, HorizontalAlignment.Left);
+                        lvAllProduct.Columns.Add("จำนวน", 100, HorizontalAlignment.Left);
+                        lvAllProduct.Columns.Add("หน่วย", 100, HorizontalAlignment.Left);
+                        lvAllProduct.Columns.Add("สถานะ", 100, HorizontalAlignment.Left);
 
 
                         //Loop วนเข้าไปใน Datatable 
-                        foreach(DataRow dataRow in dataTable.Rows)
+                        foreach (DataRow dataRow in dataTable.Rows)
                         {
                             ListViewItem item = new ListViewItem(); //สร้าง ITem เพื่อเก็บข้อมูลในแต่ละรายการ
                             //เอารูปใส่ใน Item
                             Image proImage = null;
-                            if (dataRow["proImage"]!= DBNull.Value)
+                            if (dataRow["proImage"] != DBNull.Value)
                             {
                                 byte[] imgByte = (byte[])dataRow["proImage"];
                                 //แปลงข้อมูลรูปจากฐานข้อมูล Binary ให้เป็นรูป
@@ -106,7 +106,8 @@ namespace StoreProject
                                 imageKey = $"pro_{dataRow["proId"]}";
                                 lvAllProduct.SmallImageList.Images.Add(imageKey, proImage);
                                 item.ImageKey = imageKey;
-                            }else
+                            }
+                            else
                             {
                                 item.ImageIndex = -1;
                             }
@@ -135,7 +136,29 @@ namespace StoreProject
 
         private void FrmProductShow_Load(object sender, EventArgs e)
         {
-            getAllProductTolv();
+            getAllProductToLv();
+        }
+
+        private void btnFrmProductCreate_Click(object sender, EventArgs e)
+        {
+            //เปิด FrmProductCreate แบบ Dialog/Popup    
+            //สร้าง Object(ตัวแทน) ของ FrmProductCreate 
+            FrmProductCreate frmProductCreate = new FrmProductCreate();
+            //เปิดแบบปกติ
+            //frmProductCreate.Show();
+            //เปิดแบบ Dialog/
+            frmProductCreate.ShowDialog();
+            getAllProductToLv();
+        }
+
+        private void lvAllProduct_ItemActivate(object sender, EventArgs e)
+        {
+            //เปิดหน้าจอ FrmProductUpDel แบบ Dialog โดยจะส่ง ProId ของรายการที่เลือกไปด้วย
+            FrmProductUpdel frmProductUpdel = new FrmProductUpdel(
+               int.Parse(lvAllProduct.SelectedItems[0].SubItems[1].Text)
+            );
+            frmProductUpdel.ShowDialog();
+            getAllProductToLv();
         }
     }
 }

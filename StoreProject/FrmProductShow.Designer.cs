@@ -51,22 +51,23 @@
             // lvAllProduct
             // 
             this.lvAllProduct.HideSelection = false;
-            this.lvAllProduct.Location = new System.Drawing.Point(40, 100);
-            this.lvAllProduct.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.lvAllProduct.Location = new System.Drawing.Point(104, 100);
+            this.lvAllProduct.Margin = new System.Windows.Forms.Padding(6);
             this.lvAllProduct.Name = "lvAllProduct";
-            this.lvAllProduct.Size = new System.Drawing.Size(866, 304);
+            this.lvAllProduct.Size = new System.Drawing.Size(730, 304);
             this.lvAllProduct.TabIndex = 1;
             this.lvAllProduct.UseCompatibleStateImageBehavior = false;
+            this.lvAllProduct.ItemActivate += new System.EventHandler(this.lvAllProduct_ItemActivate);
             // 
             // label2
             // 
             this.label2.BackColor = System.Drawing.SystemColors.Control;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Red;
-            this.label2.Location = new System.Drawing.Point(539, 510);
+            this.label2.Location = new System.Drawing.Point(190, 428);
             this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(367, 39);
+            this.label2.Size = new System.Drawing.Size(367, 28);
             this.label2.TabIndex = 3;
             this.label2.Text = "* เมื่อต้องการแก้ไขหรือลบข้อมูลสินค้า ให้ดับเบิ้ลคลิกที่รายการสินค้า";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -75,7 +76,7 @@
             // 
             this.btnFrmProductCreate.Image = global::StoreProject.Properties.Resources.basket;
             this.btnFrmProductCreate.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnFrmProductCreate.Location = new System.Drawing.Point(682, 416);
+            this.btnFrmProductCreate.Location = new System.Drawing.Point(608, 416);
             this.btnFrmProductCreate.Margin = new System.Windows.Forms.Padding(6);
             this.btnFrmProductCreate.Name = "btnFrmProductCreate";
             this.btnFrmProductCreate.Size = new System.Drawing.Size(224, 88);
@@ -83,10 +84,11 @@
             this.btnFrmProductCreate.Text = "เพิ่มข้อมูลสินค้า";
             this.btnFrmProductCreate.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnFrmProductCreate.UseVisualStyleBackColor = true;
+            this.btnFrmProductCreate.Click += new System.EventHandler(this.btnFrmProductCreate_Click);
             // 
             // FrmProductShow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(932, 643);
             this.Controls.Add(this.label2);
@@ -95,7 +97,7 @@
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.MaximizeBox = false;
             this.Name = "FrmProductShow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
